@@ -20,7 +20,9 @@ agent:
     # astro-server) — this agent needs NO Slack tokens. frontend + messaging
     # coexist: our UI on its hostname, Slack/web on the sidecar's routes.
     messaging: true
-
+  skills:
+    - name: github.issue.investigate
+      description: Investigates github issues
 
 # Route model calls through the Astro AI Gateway instead of a personal key.
 # Injects ASTRO_GATEWAY_URL + ASTRO_GATEWAY_API_KEY (virtual key). config/model.ts
