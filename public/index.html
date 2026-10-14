@@ -600,6 +600,16 @@ function scroll(){ if (stickToBottom) timeline.scrollTop = timeline.scrollHeight
 // text) if the CDN scripts didn't load, so a message never renders as raw HTML.
 function renderMarkdown(src){
   if (typeof marked === "undefined" || typeof DOMPurify === "undefined") return null;
+  if (!renderMarkdown._hooked){
+    // Open rendered links in a new tab so a click doesn't replace the chat window.
+    DOMPurify.addHook("afterSanitizeAttributes", (node) => {
+      if (node.tagName === "A" && node.getAttribute("href")){
+        node.setAttribute("target", "_blank");
+        node.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+    renderMarkdown._hooked = true;
+  }
   return DOMPurify.sanitize(marked.parse(String(src), { breaks: true }));
 }
 
